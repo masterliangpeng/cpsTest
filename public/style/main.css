@@ -3,7 +3,6 @@ body {
     background-color: black;
     color: white;
     margin: 0;
-    /*font-family: "Maven Pro", sans-serif;*/
 }
 
 .app {
@@ -32,7 +31,7 @@ body {
 }
 
 .container {
-    padding-top: 5%;
+    padding-top: 4%;
     display: flex;
     /*justify-content: center; !* 水平居中 *!*/
     align-items: center; /* 垂直居中 */
@@ -41,17 +40,26 @@ body {
 }
 
 .text-center {
-    display: flex;
-    flex-direction: row;
+    margin-bottom: 10px;
+    /*display: flex;*/
+    /*flex-direction: row;*/
 }
 
 .text-center p {
+    display: inline;
     margin-left: 12.5rem;
     margin-right: 12.5rem;
     margin-top: 0;
     padding-top: 0;
 }
-
+.container-click{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+}
 .clickarea {
     background: #142020;
     height: 400px;
@@ -61,3 +69,22 @@ body {
     justify-content: center;
     align-items: center; /* 垂直居中 */
 }
+
+.seconds {
+    display: flex;
+    justify-content: space-between;
+    gap: 150px;
+    margin-top: 10px;
+}
+
+.seconds div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #142020;
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+}
+
+
