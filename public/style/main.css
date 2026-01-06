@@ -39,10 +39,29 @@ body {
     flex-direction: column; /* 垂直排列 */
 }
 
+.container h1{
+    margin: 0;
+    padding: 0;
+    margin-top: 2%;
+}
+
+.container h1 + p{
+    margin: 0;
+    padding: 0;
+    margin-top: 2%;
+    color: #9fc8c1;
+    width: 80%;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center; /* 水平居中 */
+    word-break: break-word; /* 自动换行 */
+}
+
 .text-center {
-    margin-bottom: 10px;
-    /*display: flex;*/
-    /*flex-direction: row;*/
+    margin: 0;
+    padding: 0;
+    margin-top: 2%;
+    /*margin-bottom: 10px;*/
 }
 
 .text-center p {
@@ -68,13 +87,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; /* 垂直居中 */
+    /*box-shadow: 0 0 0 0 rgba(20, 32, 32, 0.5);*/
+    animation: halo 2.5s infinite;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2%;
 }
 
 .seconds {
     display: flex;
     justify-content: space-between;
     gap: 150px;
-    margin-top: 10px;
+    margin-top: 2%;
 }
 
 .seconds div{
@@ -87,4 +111,37 @@ body {
     border-radius: 100%;
 }
 
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 255, 255, 0.4) 40%,
+            rgba(255, 255, 255, 0.15) 60%,
+            transparent 70%
+    );
+    transform: scale(0);
+    animation: ripple 600ms ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes halo {
+    0% {
+        box-shadow: 0 0 0 0 rgba(75, 79, 79, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px 10px rgba(75, 79, 79, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(75, 79, 79, 0.5);
+    }
+}
 

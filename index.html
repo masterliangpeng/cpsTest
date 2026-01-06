@@ -20,7 +20,7 @@
 
         <main>
             <div class="container">
-                <h1>CPS Test</h1>
+                <h1>CPS <span style="color: #9fc8c1">Test</span></h1>
                 <p>Take our CPS Test to accurately measure your clicks per second. Improve your clicking speed with our CPS Tester and challenge yourself to achieve higher scores.</p>
 
                 <div class="text-center">
@@ -30,7 +30,9 @@
                 </div>
 
                 <div class="container-click">
-                    <div class="clickarea"><p>Start clicking to test response speed</p></div>
+                    <div class="clickarea" id="circle">
+<!--                        <p>Start clicking to test response speed</p>-->
+                    </div>
 
                     <div class="seconds">
                         <div><a>10s</a></div>
@@ -47,4 +49,30 @@
         <footer></footer>
     </div>
 </body>
+<script>
+    const circle = document.getElementById('circle');
+
+    circle.addEventListener('click', (e) => {
+        const rect = circle.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+
+        circle.appendChild(ripple);
+
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
+    });
+
+
+</script>
 </html>
