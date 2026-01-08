@@ -49,7 +49,7 @@ body {
     margin: 0;
     padding: 0;
     margin-top: 2%;
-    color: #9fc8c1;
+    color: #f5e1a4;
     width: 80%;
     font-size: 17px;
     font-weight: bold;
@@ -66,11 +66,17 @@ body {
 
 .text-center p {
     display: inline;
-    margin-left: 12.5rem;
-    margin-right: 12.5rem;
+    margin-left: 11.5rem;
+    margin-right: 11.5rem;
     margin-top: 0;
     padding-top: 0;
+    font-size: 17px;
 }
+
+.text-center i{
+    /*color: #9fc8c1;*/
+}
+
 .container-click{
     width: 100%;
     height: auto;
@@ -80,14 +86,14 @@ body {
     align-items: center;
 }
 .clickarea {
-    background: #142020;
+    background: #17191a;
     height: 400px;
     width: 400px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center; /* 垂直居中 */
-    /*box-shadow: 0 0 0 0 rgba(20, 32, 32, 0.5);*/
+    /*box-shadow: 0 0px 10px rgba(75, 79, 79, 1);*/
     animation: halo 2.5s infinite;
     position: relative;
     overflow: hidden;
@@ -97,7 +103,7 @@ body {
 .seconds {
     display: flex;
     justify-content: space-between;
-    gap: 150px;
+    gap: 170px;
     margin-top: 2%;
 }
 
@@ -105,7 +111,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #142020;
+    background: #17191a;
     height: 80px;
     width: 80px;
     border-radius: 100%;
@@ -138,10 +144,38 @@ body {
         box-shadow: 0 0 0 0 rgba(75, 79, 79, 0.5);
     }
     50% {
-        box-shadow: 0 0 20px 10px rgba(75, 79, 79, 0.5);
+        box-shadow: 0 0 30px 10px rgba(75, 79, 79, 0.5);
     }
     100% {
         box-shadow: 0 0 0 0 rgba(75, 79, 79, 0.5);
     }
 }
 
+
+.click-instruction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #9fc8c1;
+    pointer-events: none;
+    animation: pulse 1.5s infinite ease-in-out;
+    user-select: none;
+}
+
+.click-instruction i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.click-instruction span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}

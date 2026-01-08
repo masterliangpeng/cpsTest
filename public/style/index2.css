@@ -1,0 +1,23 @@
+:root{--bg:#0b0f10;--panel:#12181b;--accent:#9fc8c1;--text:#eaeff2}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0b0f10 0%,#111518 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.navbar{position:sticky;top:0;height:64px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:10}
+.navbar .menu{display:flex;gap:12px}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 16px}
+.container{width:100%;max-width:960px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
+.title{font-size:40px;letter-spacing:1px}
+.title span{color:var(--accent)}
+.lead{max-width:720px;color:var(--accent)}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stat{background:var(--panel);padding:8px 16px;border-radius:12px;min-width:140px;display:flex;justify-content:space-between}
+.controls{display:flex;flex-direction:column;align-items:center;gap:16px}
+.clickarea{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#142020 0%,#0f1515 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4);transition:transform .1s ease}
+.clickarea:active{transform:scale(.98)}
+.durations{display:flex;gap:12px;flex-wrap:wrap}
+.duration{background:var(--panel);color:var(--text);border:1px solid transparent;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s ease}
+.duration:hover{border-color:#243435}
+.duration.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(159,200,193,.2)}
+.ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.7) 0%,rgba(255,255,255,.4) 40%,rgba(255,255,255,.15) 60%,transparent 70%);transform:scale(0);animation:ripple 600ms ease-out;pointer-events:none}
+@keyframes ripple{to{transform:scale(1);opacity:0}}
+.footer{height:40px}

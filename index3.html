@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CPS Test – v3</title>
+    <link rel="stylesheet" href="/public/style/index3.css">
+</head>
+<body>
+    <div class="app">
+        <header class="topbar">
+            <div class="brand">CPS Test</div>
+        </header>
+        <main class="main">
+            <section class="card">
+                <h1 class="title">CPS <span>Test</span></h1>
+                <p class="subtitle">点击圆形区域或按下空格开始测试你的点击速度</p>
+
+                <div class="metrics">
+                    <div class="metric"><span>Timer</span><strong id="timer">10s</strong></div>
+                    <div class="metric"><span>Click/s</span><strong id="cps">0</strong></div>
+                    <div class="metric"><span>Clicks</span><strong id="clicks">0</strong></div>
+                </div>
+
+                <div class="stage">
+                    <div class="ring" id="ring">
+                        <div class="circle" id="circle"></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="seg">
+                        <button class="seg-btn active" data-seconds="10">10s</button>
+                        <button class="seg-btn" data-seconds="15">15s</button>
+                        <button class="seg-btn" data-seconds="30">30s</button>
+                        <button class="seg-btn" data-seconds="60">60s</button>
+                    </div>
+                    <div class="cta">
+                        <button class="btn primary" id="startBtn">开始</button>
+                        <button class="btn ghost" id="resetBtn">重置</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+    const circle = document.getElementById('circle');
+    const ring = document.getElementById('ring');
+    const timerEl = document.getElementById('timer');
+    const cpsEl = document.getElementById('cps');
+    const clicksEl = document.getElementById('clicks');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const segBtns = Array.from(document.querySelectorAll('.seg-btn'));
+
+    let duration = 10;
+    let running = false;
+    let clickCount = 0;
+    let startTime = 0;
+    let intervalId = null;
+    let endTimeoutId = null;
+
+    function setActive(btn) {
+        segBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function setProgress(angle) {
+        ring.style.setProperty('--angle', angle + 'deg');
+    }
+
+    function update() {
+        const elapsed = Math.max((Date.now() - startTime) / 1000, 0);
+        const remaining = Math.max(duration - Math.floor(elapsed), 0);
+        timerEl.textContent = remaining + 's';
+        const cps = elapsed > 0 ? (clickCount / elapsed) : 0;
+        cpsEl.textContent = cps.toFixed(2);
+        clicksEl.textContent = clickCount;
+        const angle = Math.min(360 * (elapsed / duration), 360);
+        setProgress(angle);
+    }
+
+    function endTest() {
+        running = false;
+        clearInterval(intervalId);
+        intervalId = null;
+        clearTimeout(endTimeoutId);
+        timerEl.textContent = '0s';
+        const cps = duration > 0 ? (clickCount / duration) : 0;
+        cpsEl.textContent = cps.toFixed(2);
+        clicksEl.textContent = clickCount;
+        setProgress(360);
+    }
+
+    function startTest() {
+        running = true;
+        clickCount = 0;
+        startTime = Date.now();
+        timerEl.textContent = duration + 's';
+        cpsEl.textContent = '0';
+        clicksEl.textContent = '0';
+        setProgress(0);
+        clearInterval(intervalId);
+        intervalId = setInterval(update, 100);
+        clearTimeout(endTimeoutId);
+        endTimeoutId = setTimeout(endTest, duration * 1000);
+    }
+
+    function reset() {
+        running = false;
+        clearInterval(intervalId);
+        intervalId = null;
+        clearTimeout(endTimeoutId);
+        timerEl.textContent = duration + 's';
+        cpsEl.textContent = '0';
+        clicksEl.textContent = '0';
+        setProgress(0);
+        clickCount = 0;
+    }
+
+    segBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            duration = parseInt(btn.getAttribute('data-seconds'), 10);
+            setActive(btn);
+            reset();
+        });
+    });
+
+    startBtn.addEventListener('click', () => {
+        startTest();
+    });
+
+    resetBtn.addEventListener('click', () => {
+        reset();
+    });
+
+    function addRipple(e) {
+        const rect = circle.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        circle.appendChild(ripple);
+        ripple.addEventListener('animationend', () => { ripple.remove(); });
+    }
+
+    circle.addEventListener('click', e => {
+        addRipple(e);
+        if (!running) startTest();
+        clickCount += 1;
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.code === 'Space') {
+            e.preventDefault();
+            circle.click();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            startBtn.click();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,34 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        .circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #3498db;
-            position: relative;
-            box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
-            animation: halo 1s infinite;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPS Test 点击区域优化UI</title>
+  <style>
+    /* 页面基础样式，可根据你的网站调整 */
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+      font-family: "Arial Bold", "思源黑体", sans-serif;
+    }
 
-        @keyframes halo {
-            0% {
-                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 20px 10px rgba(52, 152, 219, 0.7);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
-            }
-        }
+    /* 核心点击区域样式 */
+    .cps-click-area {
+      /* 基础尺寸：PC端220px，移动端自适应缩小 */
+      width: clamp(120px, 15vw, 220px);
+      height: clamp(120px, 15vw, 220px);
+      border-radius: 50%; /* 圆形点击区域，无死角 */
+      background: linear-gradient(135deg, #ff3a3a 0%, #ff2222 100%); /* 渐变红，增强立体感 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer; /* 鼠标指针提示可点击 */
+      box-shadow: 0 8px 16px rgba(255, 58, 58, 0.25); /* 悬浮阴影，强化点击质感 */
+      border: 2px solid #ffffff; /* 白色描边，突出边界 */
+      /* 呼吸动效：无点击时持续放大缩小 */
+      animation: breathe 3s ease-in-out infinite;
+      /* 禁止文字选中，避免点击时误选文案 */
+      user-select: none;
+      /* 过渡效果：悬停/点击时平滑变化 */
+      transition: all 0.2s ease;
+    }
 
-    </style>
+    /* 鼠标悬停反馈：放大+阴影加深 */
+    .cps-click-area:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 24px rgba(255, 58, 58, 0.35);
+    }
+
+    /* 点击时的按压效果 */
+    .cps-click-area:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(255, 58, 58, 0.2);
+    }
+
+    /* 呼吸动效关键帧 */
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* 图标样式 */
+    .click-icon {
+      width: clamp(40px, 5vw, 70px); /* 图标尺寸自适应 */
+      height: auto;
+      fill: #ffffff; /* SVG图标颜色 */
+      margin-bottom: 8px;
+    }
+
+    /* 文案样式 */
+    .click-text {
+      color: #ffffff;
+      font-size: clamp(14px, 2vw, 18px); /* 文字尺寸自适应 */
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* 辅助提示文案（可选） */
+    .click-tip {
+      margin-top: 20px;
+      color: #666666;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="circle"></div>
+<!-- 核心点击区域 -->
+<div class="cps-click-area" id="clickArea">
+  <!-- 手指点击SVG图标（可直接替换成闪电/靶心等） -->
+  <svg class="click-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 2a1 1 0 0 1 .993.883L10 3v7a1 1 0 0 1-1.993.117L8 10V3a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 .993.883L14 3v11a1 1 0 0 1-1.993.117L12 14V3a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 .993.883L18 3v15a1 1 0 0 1-1.993.117L16 18V3a1 1 0 0 1 1-1zM4 5a1 1 0 0 1 .993.883L5 6v15a1 1 0 0 1-1.993.117L3 21V6a1 1 0 0 1 1-1z"/>
+  </svg>
+  <!-- 引导文案 -->
+  <div class="click-text">
+    点击我<br>开始测手速
+  </div>
+</div>
+
+<!-- 可选：辅助提示文案 -->
+<div class="click-tip">越快点击，分数越高 →</div>
+
+<!-- 可选：点击计数功能（测试用） -->
+<script>
+  let clickCount = 0;
+  const clickArea = document.getElementById('clickArea');
+  // 点击计数演示（可替换成你的CPS逻辑）
+  clickArea.addEventListener('click', () => {
+    clickCount++;
+    clickArea.querySelector('.click-text').innerHTML = `已点击<br>${clickCount} 次`;
+    // 点击后1秒恢复原文案（模拟测试结束/重置）
+    setTimeout(() => {
+      clickArea.querySelector('.click-text').innerHTML = '点击我<br>开始测手速';
+    }, 1000);
+  });
+</script>
 </body>
 </html>

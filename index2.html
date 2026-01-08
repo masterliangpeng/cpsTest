@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CPS Test</title>
+    <link rel="stylesheet" href="/public/style/index2.css">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="menu">
+                <button>排行</button>
+                <button>功能</button>
+                <button>翻译</button>
+            </div>
+        </nav>
+        <main>
+            <div class="container">
+                <h1 class="title">CPS <span>Test</span></h1>
+                <p class="lead">点击圆形区域开始测试你的点击速度</p>
+                <div class="stats">
+                    <div class="stat"><span>Timer</span><strong id="timerDisplay">10s</strong></div>
+                    <div class="stat"><span>Click/s</span><strong id="cpsDisplay">0</strong></div>
+                    <div class="stat"><span>Score</span><strong id="scoreDisplay">0</strong></div>
+                </div>
+                <div class="controls">
+                    <div class="clickarea" id="circle"></div>
+                    <div class="durations">
+                        <button class="duration active" data-seconds="10">10s</button>
+                        <button class="duration" data-seconds="20">20s</button>
+                        <button class="duration" data-seconds="30">30s</button>
+                        <button class="duration" data-seconds="40">40s</button>
+                        <button class="duration" data-seconds="50">50s</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer"></footer>
+    </div>
+<script>
+    const circle = document.getElementById('circle');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const cpsDisplay = document.getElementById('cpsDisplay');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const durationBtns = Array.from(document.querySelectorAll('.duration'));
+
+    let duration = 10;
+    let running = false;
+    let clickCount = 0;
+    let startTime = 0;
+    let intervalId = null;
+    let endTimeoutId = null;
+
+    function setActiveDuration(btn) {
+        durationBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    durationBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            duration = parseInt(btn.getAttribute('data-seconds'), 10);
+            timerDisplay.textContent = duration + 's';
+            setActiveDuration(btn);
+            if (running) {
+                endTest();
+            }
+        });
+    });
+
+    function updateRunning() {
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = Math.max(duration - Math.floor(elapsed), 0);
+        timerDisplay.textContent = remaining + 's';
+        const cps = elapsed > 0 ? (clickCount / elapsed) : 0;
+        cpsDisplay.textContent = cps.toFixed(2);
+        scoreDisplay.textContent = clickCount;
+    }
+
+    function endTest() {
+        running = false;
+        clearInterval(intervalId);
+        intervalId = null;
+        clearTimeout(endTimeoutId);
+        timerDisplay.textContent = '0s';
+        const cps = duration > 0 ? (clickCount / duration) : 0;
+        cpsDisplay.textContent = cps.toFixed(2);
+        scoreDisplay.textContent = clickCount;
+    }
+
+    function startTest() {
+        running = true;
+        clickCount = 0;
+        startTime = Date.now();
+        timerDisplay.textContent = duration + 's';
+        cpsDisplay.textContent = '0';
+        scoreDisplay.textContent = '0';
+        intervalId = setInterval(updateRunning, 100);
+        clearTimeout(endTimeoutId);
+        endTimeoutId = setTimeout(endTest, duration * 1000);
+    }
+
+    circle.addEventListener('click', e => {
+        const rect = circle.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        circle.appendChild(ripple);
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
+
+        if (!running) startTest();
+        clickCount += 1;
+    });
+</script>
+</body>
+</html>
