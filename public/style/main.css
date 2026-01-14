@@ -93,6 +93,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; /* 垂直居中 */
+    flex-direction: column;
     /*box-shadow: 0 0px 10px rgba(75, 79, 79, 1);*/
     animation: halo 2.5s infinite;
     position: relative;
