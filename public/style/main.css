@@ -118,6 +118,11 @@ body {
     border-radius: 100%;
 }
 
+.seconds a{
+    text-decoration: none;
+    color: #fff;
+}
+
 .ripple {
     position: absolute;
     border-radius: 50%;
