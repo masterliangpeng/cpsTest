@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意长草按钮升级版</title>
+    <style>
+        body {
+            padding: 80px;
+            background-color: #121212;
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        /* 通用按钮容器 */
+        .btn-container {
+            position: relative;
+            display: inline-block;
+            /* 为草屑留出空间 */
+            overflow: visible;
+        }
+
+        /* 基础圆形按钮样式 */
+        .btn-grass {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+        }
+        .btn-grass:hover {
+            background: #383838;
+            transform: scale(1.03);
+        }
+        .btn-grass:active {
+            transform: scale(0.98);
+        }
+        .btn-grass:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(69, 222, 128, 0.3);
+        }
+
+        /* ========== 效果1：小草随鼠标跟随晃动 ========== */
+        .grass-follow {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%) scale(0) rotate(0deg);
+            font-size: 24px;
+            color: #4ade80;
+            opacity: 0;
+            pointer-events: none;
+            transition:
+                    transform 0.4s cubic-bezier(0.2, 1.8, 0.3, 1),
+                    opacity 0.3s ease;
+        }
+        .btn-grass-1:focus .grass-follow {
+            opacity: 1;
+            transform: translateX(-50%) scale(1) rotate(0deg);
+        }
+
+        /* ========== 效果2：点击撒草屑+小草生长 ========== */
+        .grass-main {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) scale(0) translateY(10px);
+            font-size: 22px;
+            color: #65d36e;
+            opacity: 0;
+            pointer-events: none;
+            transition:
+                    transform 0.4s cubic-bezier(0.2, 1.8, 0.3, 1),
+                    opacity 0.3s ease;
+            animation: grass-sway 2s ease-in-out infinite alternate;
+        }
+        .btn-grass-2:focus .grass-main {
+            opacity: 1;
+            transform: translateX(-50%) scale(1) translateY(0);
+        }
+        /* 草屑元素 */
+        .grass-chip {
+            position: absolute;
+            font-size: 8px;
+            color: #4ade80;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ========== 效果3：渐变草色+分层生长 ========== */
+        .grass-layer {
+            position: absolute;
+            top: -15px;
+            font-size: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0);
+            transition:
+                    transform 0.3s cubic-bezier(0.2, 1.8, 0.3, 1),
+                    opacity 0.2s ease;
+        }
+        /* 分层定位+渐变草色 */
+        .grass-layer-1 {
+            left: 40%;
+            color: #34d399; /* 嫩绿色 */
+            transition-delay: 0.05s;
+            animation: grass-sway 1.9s ease-in-out infinite alternate;
+        }
+        .grass-layer-2 {
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4ade80; /* 青绿色 */
+            font-size: 22px;
+            transition-delay: 0.1s;
+            animation: grass-sway 2.1s ease-in-out infinite alternate;
+        }
+        .grass-layer-3 {
+            left: 60%;
+            color: #65d36e; /* 深绿色 */
+            transition-delay: 0.15s;
+            animation: grass-sway 2s ease-in-out infinite alternate;
+        }
+        .btn-grass-3:focus .grass-layer {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 通用小草晃动动画 */
+        @keyframes grass-sway {
+            0% { transform: translateX(-50%) rotate(-8deg); }
+            100% { transform: translateX(-50%) rotate(8deg); }
+        }
+        /* 草屑飘落动画 */
+        @keyframes chip-fall {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) rotate(180deg);
+            }
+        }
+        /* 修正分层小草的晃动 */
+        .grass-layer-1 { animation: grass-sway-1 1.9s ease-in-out infinite alternate; }
+        .grass-layer-3 { animation: grass-sway-3 2s ease-in-out infinite alternate; }
+        @keyframes grass-sway-1 {
+            0% { transform: scale(1) rotate(-6deg); }
+            100% { transform: scale(1) rotate(6deg); }
+        }
+        @keyframes grass-sway-3 {
+            0% { transform: scale(1) rotate(-7deg); }
+            100% { transform: scale(1) rotate(7deg); }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<!-- 效果1：小草随鼠标跟随晃动 -->
+<div class="btn-container" id="follow-container">
+    <button class="btn-grass btn-grass-1" tabindex="0">
+        随动
+        <i class="fas fa-seedling grass-follow"></i>
+    </button>
+</div>
+
+<!-- 效果2：点击撒草屑+小草生长 -->
+<div class="btn-container">
+    <button class="btn-grass btn-grass-2" tabindex="0" onclick="createGrassChips(this)">
+        撒屑
+        <i class="fas fa-seedling grass-main"></i>
+    </button>
+</div>
+
+<!-- 效果3：渐变草色+分层生长 -->
+<div class="btn-container">
+    <button class="btn-grass btn-grass-3" tabindex="0">
+        渐变
+        <i class="fas fa-seedling grass-layer grass-layer-1"></i>
+        <i class="fas fa-seedling grass-layer grass-layer-2"></i>
+        <i class="fas fa-seedling grass-layer grass-layer-3"></i>
+    </button>
+</div>
+
+<script>
+    // 点击空白处隐藏小草
+    document.addEventListener('click', function(e) {
+        const buttons = document.querySelectorAll('.btn-grass');
+        buttons.forEach(btn => {
+            if (!btn.contains(e.target)) {
+                btn.blur();
+            }
+        });
+    });
+
+    // 效果1：小草随鼠标晃动
+    const followContainer = document.getElementById('follow-container');
+    const followGrass = followContainer.querySelector('.grass-follow');
+    followContainer.addEventListener('mousemove', function(e) {
+        if (followGrass.style.opacity === '1') { // 只有小草显示时才跟随
+            const rect = followContainer.getBoundingClientRect();
+            // 计算鼠标相对按钮中心的偏移
+            const xOffset = (e.clientX - (rect.left + rect.width/2)) / 5;
+            const yOffset = (e.clientY - (rect.top + rect.height/2)) / 5;
+            // 限制晃动角度，避免过度倾斜
+            const rotate = Math.max(-15, Math.min(15, xOffset * 2));
+            followGrass.style.transform = `translateX(-50%) scale(1) translateY(${yOffset}px) rotate(${rotate}deg)`;
+        }
+    });
+
+    // 效果2：创建草屑飘落效果
+    function createGrassChips(btn) {
+        const container = btn.parentElement;
+        // 清除旧草屑
+        const oldChips = container.querySelectorAll('.grass-chip');
+        oldChips.forEach(chip => chip.remove());
+
+        // 创建8-10个随机草屑
+        const chipCount = Math.floor(Math.random() * 3) + 8;
+        for (let i = 0; i < chipCount; i++) {
+            const chip = document.createElement('i');
+            chip.classList.add('fas', 'fa-seedling', 'grass-chip');
+
+            // 随机位置（按钮周围）
+            const posX = Math.random() * 80 - 40; // -40 ~ 40px
+            const posY = Math.random() * 40 - 20; // -20 ~ 20px
+            chip.style.left = `calc(50% + ${posX}px)`;
+            chip.style.top = `calc(50% + ${posY}px)`;
+
+            // 随机飘落轨迹
+            const fallX = Math.random() * 60 - 30; // -30 ~ 30px
+            const fallY = Math.random() * 80 + 40; // 40 ~ 120px
+            chip.style.setProperty('--x', `${fallX}px`);
+            chip.style.setProperty('--y', `${fallY}px`);
+
+            // 随机动画时长
+            const duration = Math.random() * 1 + 1; // 1 ~ 2s
+            chip.style.animation = `chip-fall ${duration}s ease forwards`;
+
+            container.appendChild(chip);
+        }
+    }
+</script>
+</body>
+</html>
