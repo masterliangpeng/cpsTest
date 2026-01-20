@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多风格圆形按钮合集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        body {
+            background: #121212;
+            padding: 50px;
+        }
+
+        /* 每组按钮的容器 */
+        .btn-group {
+            margin: 40px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .group-title {
+            color: #f0e6d2;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        /* 基础按钮样式（所有按钮共用） */
+        .circle-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ============= 风格1：双层描边扩散 ============= */
+        .btn-style1 {
+            background: #1a1a1a;
+            border: 2px solid #f0e6d2;
+            box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+        }
+
+        .btn-style1:hover {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .btn-style1.active {
+            background: #ffd700;
+            color: #1a1a1a;
+            border-color: #fff;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ============= 风格2：嵌套同心圆填充 ============= */
+        .btn-style2 {
+            background: #1a1a1a;
+            border: 2px solid #f0e6d2;
+        }
+
+        .btn-style2::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffd700;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .btn-style2:hover::after {
+            transform: translate(-50%, -50%) scale(6);
+            opacity: 0.2;
+        }
+
+        .btn-style2.active {
+            color: #ffd700;
+        }
+
+        .btn-style2.active::after {
+            transform: translate(-50%, -50%) scale(6);
+            opacity: 1;
+        }
+
+        /* ============= 风格3：镂空双层描边 ============= */
+        .btn-style3 {
+            background: transparent;
+            border: 3px solid #2c2c2c;
+            color: #f0e6d2;
+        }
+
+        .btn-style3::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transform: translate(-50%, -50%);
+            transition: border-color 0.3s ease;
+        }
+
+        .btn-style3:hover {
+            border-color: #ffd700;
+        }
+
+        .btn-style3:hover::before {
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .btn-style3.active {
+            border-color: #ffd700;
+            color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* ============= 风格4：脉冲呼吸外圈 ============= */
+        .btn-style4 {
+            background: #1a1a1a;
+            border: 2px solid #f0e6d2;
+        }
+
+        .btn-style4::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .btn-style4:hover::after {
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .btn-style4.active {
+            background: #ffd700;
+            color: #1a1a1a;
+            border-color: #fff;
+        }
+
+        /* ============= 风格5：渐变内外圈分层 ============= */
+        .btn-style5 {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            border: 2px solid transparent;
+            /* 内圈渐变描边 */
+            background-clip: padding-box, border-box;
+            background-origin: padding-box, border-box;
+            border-image: linear-gradient(135deg, #f0e6d2, #8b7d4f) 1;
+        }
+
+        .btn-style5::before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+
+        .btn-style5 span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-style5:hover {
+            border-image: linear-gradient(135deg, #ffd700, #f0c800) 1;
+        }
+
+        .btn-style5:hover::before {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .btn-style5.active {
+            background: linear-gradient(135deg, #ffd700 0%, #f0c800 100%);
+            color: #1a1a1a;
+            border-image: linear-gradient(135deg, #fff, #ffd700) 1;
+        }
+    </style>
+</head>
+<body>
+<!-- 风格1：双层描边扩散 -->
+<h3 class="group-title">风格1：双层描边扩散</h3>
+<div class="btn-group">
+    <button class="circle-btn btn-style1 active">10s</button>
+    <button class="circle-btn btn-style1">20s</button>
+    <button class="circle-btn btn-style1">30s</button>
+</div>
+
+<!-- 风格2：嵌套同心圆填充 -->
+<h3 class="group-title">风格2：嵌套同心圆填充</h3>
+<div class="btn-group">
+    <button class="circle-btn btn-style2 active">10s</button>
+    <button class="circle-btn btn-style2">20s</button>
+    <button class="circle-btn btn-style2">30s</button>
+</div>
+
+<!-- 风格3：镂空双层描边 -->
+<h3 class="group-title">风格3：镂空双层描边</h3>
+<div class="btn-group">
+    <button class="circle-btn btn-style3 active">10s</button>
+    <button class="circle-btn btn-style3">20s</button>
+    <button class="circle-btn btn-style3">30s</button>
+</div>
+
+<!-- 风格4：脉冲呼吸外圈 -->
+<h3 class="group-title">风格4：脉冲呼吸外圈</h3>
+<div class="btn-group">
+    <button class="circle-btn btn-style4 active">10s</button>
+    <button class="circle-btn btn-style4">20s</button>
+    <button class="circle-btn btn-style4">30s</button>
+</div>
+
+<!-- 风格5：渐变内外圈分层 -->
+<h3 class="group-title">风格5：渐变内外圈分层</h3>
+<div class="btn-group">
+    <button class="circle-btn btn-style5 active"><span>10s</span></button>
+    <button class="circle-btn btn-style5"><span>20s</span></button>
+    <button class="circle-btn btn-style5"><span>30s</span></button>
+</div>
+
+<!-- 选中态切换JS -->
+<script>
+    // 给所有按钮组添加选中态切换逻辑
+    document.querySelectorAll('.btn-group').forEach(group => {
+        const buttons = group.querySelectorAll('.circle-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    });
+</script>
+</body>
+</html>

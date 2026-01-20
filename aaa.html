@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>按钮头顶长小草</title>
+  <style>
+    body {
+      padding: 80px;
+      background-color: #121212;
+      display: flex;
+      gap: 60px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    /* 按钮容器：定位小草 */
+    .btn-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* 基础圆形按钮样式 */
+    .btn-grass {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      color: #e0e0e0;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      position: relative;
+      /* 给小草留出顶部空间 */
+      overflow: visible;
+    }
+    .btn-grass:hover {
+      background: #383838;
+      transform: scale(1.03);
+    }
+    .btn-grass:active {
+      transform: scale(0.98);
+    }
+    /* 聚焦样式：淡绿色细轮廓，呼应小草 */
+    .btn-grass:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(69, 222, 128, 0.3);
+    }
+
+    /* ========== 效果1：单根小草从头顶生长 ========== */
+    .grass-single {
+      position: absolute;
+      top: -15px; /* 初始在按钮顶部外 */
+      left: 50%;
+      transform: translateX(-50%) scale(0) translateY(10px);
+      font-size: 22px;
+      color: #4ade80;
+      opacity: 0;
+      pointer-events: none;
+      /* 弹性生长动画 */
+      transition:
+              transform 0.4s cubic-bezier(0.2, 1.8, 0.3, 1),
+              opacity 0.3s ease;
+      /* 小草晃动动画 */
+      animation: grass-sway 2s ease-in-out infinite alternate;
+    }
+    .btn-grass-1:focus .grass-single {
+      opacity: 1;
+      transform: translateX(-50%) scale(1) translateY(0);
+    }
+
+    /* ========== 效果2：多根小草随机冒头 ========== */
+    .grass-multi {
+      position: absolute;
+      top: -12px;
+      font-size: 18px;
+      color: #65d36e;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0);
+    }
+    /* 分散定位多根小草 */
+    .grass-multi-1 { left: 25%; }
+    .grass-multi-2 { left: 50%; transform: translateX(-50%); }
+    .grass-multi-3 { left: 75%; }
+    /* 不同时长的生长动画，营造随机感 */
+    .btn-grass-2:focus .grass-multi {
+      opacity: 1;
+      transform: scale(1);
+      transition:
+              transform 0.3s cubic-bezier(0.2, 1.8, 0.3, 1),
+              opacity 0.2s ease;
+    }
+    .btn-grass-2:focus .grass-multi-1 { transition-delay: 0.1s; }
+    .btn-grass-2:focus .grass-multi-2 { transition-delay: 0.05s; }
+    .btn-grass-2:focus .grass-multi-3 { transition-delay: 0.15s; }
+    /* 每根小草不同频率的晃动 */
+    .grass-multi-1 { animation: grass-sway 1.8s ease-in-out infinite alternate; }
+    .grass-multi-2 { animation: grass-sway 2.2s ease-in-out infinite alternate; }
+    .grass-multi-3 { animation: grass-sway 2s ease-in-out infinite alternate; }
+
+    /* 小草晃动动画：模拟风吹效果 */
+    @keyframes grass-sway {
+      0% { transform: translateX(-50%) rotate(-8deg); }
+      100% { transform: translateX(-50%) rotate(8deg); }
+    }
+    /* 修正多根小草的晃动定位 */
+    .grass-multi-1 { animation: grass-sway-1 1.8s ease-in-out infinite alternate; }
+    .grass-multi-3 { animation: grass-sway-3 2s ease-in-out infinite alternate; }
+    @keyframes grass-sway-1 {
+      0% { transform: scale(1) rotate(-8deg); }
+      100% { transform: scale(1) rotate(8deg); }
+    }
+    @keyframes grass-sway-3 {
+      0% { transform: scale(1) rotate(-6deg); }
+      100% { transform: scale(1) rotate(6deg); }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<!-- 效果1：单根小草从头顶生长 -->
+<div class="btn-container">
+  <button class="btn-grass btn-grass-1" tabindex="0">
+    独苗
+    <i class="fas fa-seedling grass-single"></i>
+  </button>
+</div>
+
+<!-- 效果2：多根小草随机冒头 -->
+<div class="btn-container">
+  <button class="btn-grass btn-grass-2" tabindex="0">
+    草丛
+    <i class="fas fa-seedling grass-multi grass-multi-1"></i>
+    <i class="fas fa-seedling grass-multi grass-multi-2"></i>
+    <i class="fas fa-seedling grass-multi grass-multi-3"></i>
+  </button>
+</div>
+
+<!-- 点击空白处隐藏小草 -->
+<script>
+  document.addEventListener('click', function(e) {
+    const buttons = document.querySelectorAll('.btn-grass');
+    buttons.forEach(btn => {
+      if (!btn.contains(e.target)) {
+        btn.blur();
+      }
+    });
+  });
+</script>
+</body>
+</html>

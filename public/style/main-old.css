@@ -35,7 +35,7 @@ body {
     display: flex;
     /*justify-content: center; !* 水平居中 *!*/
     align-items: center; /* 垂直居中 */
-    /*min-height: calc(100vh - 80px); !* 最小高度，留出导航栏空间 *!*/
+    height: 100vh; /* 占满视口高度 */
     flex-direction: column; /* 垂直排列 */
 }
 
@@ -186,68 +186,39 @@ body {
     100% { transform: scale(1); opacity: 0.8; }
 }
 
-/* Footer Styles - 网格分割式 */
+/* Footer Styles */
 footer {
-    background-color: #000;
-    padding: 20px 20px;
-    margin-top: 70px;
-    border-top: 1px solid #17191a;
-    clear: both;
-    position: relative;
-    z-index: 1;
+    background-color: #0a0a0a;
+    padding: 60px 20px;
+    margin-top: 80px;
+    border-top: 2px solid #17191a;
 }
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    /*display: grid;*/
-    /*grid-template-columns: repeat(3, 1fr);*/
-    /*gap: 0;*/
-    /*align-items: start;*/
-    border-radius: 8px;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
 }
 
 .footer-section {
-    padding: 30px 25px;
-    transition: background 0.3s ease;
-}
-
-.footer-section:nth-child(3n) {
-    border-right: none;
-}
-
-.footer-section:nth-child(n+4) {
-    border-bottom: none;
-}
-
-.footer-section:hover {
-    background: rgba(23, 25, 26, 0.5);
+    padding: 20px;
 }
 
 .footer-section h2 {
     color: #f5e1a4;
-    font-size: 1.3rem;
-    margin: 0 0 18px 0;
-    padding-bottom: 12px;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
     border-bottom: 2px solid #17191a;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-    font-weight: 700;
-}
-
-.footer-section h2 i {
-    font-size: 1.2rem;
-    color: inherit;
+    padding-bottom: 10px;
 }
 
 .footer-section p {
     color: #b0b0b0;
-    line-height: 1.7;
-    font-size: 0.92rem;
-    margin: 0 0 15px 0;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
 }
 
 .footer-section ul {
@@ -262,16 +233,10 @@ footer {
     padding-left: 20px;
     position: relative;
     line-height: 1.6;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-}
-
-.footer-section ul li:hover {
-    color: #f5e1a4;
 }
 
 .footer-section ul li:before {
-    content: "▪";
+    content: "▸";
     position: absolute;
     left: 0;
     color: #f5e1a4;
@@ -280,63 +245,4 @@ footer {
 .footer-section strong {
     color: #ffffff;
     font-weight: 600;
-}
-
-/* 响应式设计 */
-@media screen and (max-width: 1024px) {
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-section {
-        border-right: 2px solid #17191a;
-        border-bottom: 2px solid #17191a;
-    }
-
-    .footer-section:nth-child(2n) {
-        border-right: none;
-    }
-
-    .footer-section:nth-child(n+5) {
-        border-bottom: none;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    footer {
-        padding: 40px 15px;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        border: 2px solid #17191a;
-    }
-
-    .footer-section {
-        border-right: none;
-        border-bottom: 2px solid #17191a;
-    }
-
-    .footer-section:last-child {
-        border-bottom: none;
-    }
-
-    .footer-section h2 {
-        font-size: 1.2rem;
-    }
-
-    .footer-section p,
-    .footer-section ul li {
-        font-size: 0.88rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    footer {
-        padding: 30px 10px;
-    }
-
-    .footer-section {
-        padding: 20px 15px;
-    }
 }

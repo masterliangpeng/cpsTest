@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超大胆异形按钮合集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        body {
+            background: #121212;
+            padding: 50px;
+        }
+
+        .btn-group {
+            margin: 60px 0;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .group-title {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 22px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        /* 基础异形按钮样式 */
+        .shape-btn {
+            width: 100px;
+            height: 100px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* ============= 风格1：炸裂五角星 + 粒子爆发 ============= */
+        .btn-star {
+            /* 五角星形状核心：clip-path多边形 */
+            clip-path: polygon(
+                    50% 0%,
+                    61% 35%,
+                    98% 35%,
+                    68% 57%,
+                    79% 91%,
+                    50% 70%,
+                    21% 91%,
+                    32% 57%,
+                    2% 35%,
+                    39% 35%
+            );
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px #ffd700 inset;
+        }
+
+        .btn-star::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffd700 0%, #ff6b00 50%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        .btn-star:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 0 0 5px #ffd700 inset, 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .btn-star:active::before {
+            width: 250px;
+            height: 250px;
+            opacity: 1;
+            transition: width 0.8s ease, height 0.8s ease, opacity 0.8s ease;
+        }
+
+        .btn-star.active {
+            background: linear-gradient(45deg, #ffd700, #ff6b00);
+            color: #121212;
+            box-shadow: 0 0 0 5px #fff inset, 0 0 40px rgba(255, 215, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* ============= 风格2：锯齿多边形 + 液态流动 ============= */
+        .btn-polygon {
+            /* 八边形锯齿形状 */
+            clip-path: polygon(
+                    50% 0%,
+                    70% 15%,
+                    90% 15%,
+                    100% 35%,
+                    85% 55%,
+                    85% 75%,
+                    65% 90%,
+                    45% 80%,
+                    25% 90%,
+                    15% 75%,
+                    15% 55%,
+                    0% 35%,
+                    10% 15%,
+                    30% 15%
+            );
+            background: linear-gradient(135deg, #00ffea, #ff00c8);
+            color: #121212;
+            box-shadow: 0 0 20px rgba(0, 255, 234, 0.4);
+        }
+
+        .btn-polygon::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: linear-gradient(225deg, #ff00c8, #00ffea);
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.8;
+            animation: liquid-flow 4s ease-in-out infinite alternate;
+            clip-path: inherit; /* 继承父元素的异形 */
+        }
+
+        @keyframes liquid-flow {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1.08); }
+        }
+
+        .btn-polygon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(0, 255, 234, 0.7);
+        }
+
+        .btn-polygon.active {
+            animation: pulse-polygon 2s infinite;
+        }
+
+        @keyframes pulse-polygon {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 200, 0.8); }
+            70% { box-shadow: 0 0 0 25px rgba(255, 0, 200, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 200, 0); }
+        }
+
+        /* ============= 风格3：不规则碎片 + 故障闪烁 ============= */
+        .btn-shard {
+            /* 不规则碎片形状 */
+            clip-path: polygon(
+                    20% 0%,
+                    100% 10%,
+                    80% 60%,
+                    90% 100%,
+                    30% 85%,
+                    0% 50%,
+                    10% 15%
+            );
+            background: #1a1a1a;
+            box-shadow: 0 0 0 2px #fff inset;
+        }
+
+        .btn-shard span {
+            position: relative;
+            display: block;
+            transform: rotate(-5deg);
+        }
+
+        .btn-shard span::before,
+        .btn-shard span::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: inherit;
+        }
+
+        .btn-shard span::before {
+            left: 3px;
+            top: 3px;
+            color: #ff0000;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        .btn-shard span::after {
+            left: -3px;
+            top: -3px;
+            color: #0000ff;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        .btn-shard:hover {
+            animation: glitch-shard 0.4s infinite;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes glitch-shard {
+            0% { transform: translate(0) rotate(-5deg); }
+            25% { transform: translate(-3px, 3px) rotate(-7deg); }
+            50% { transform: translate(3px, -3px) rotate(-3deg); }
+            75% { transform: translate(-2px, -2px) rotate(-8deg); }
+            100% { transform: translate(0) rotate(-5deg); }
+        }
+
+        .btn-shard.active {
+            background: #fff;
+            color: #121212;
+            animation: glitch-active-shard 0.2s infinite;
+        }
+
+        @keyframes glitch-active-shard {
+            0% { box-shadow: 0 0 0 5px #ff0000, 0 0 25px rgba(255, 0, 0, 0.6); }
+            50% { box-shadow: 0 0 0 5px #0000ff, 0 0 25px rgba(0, 0, 255, 0.6); }
+            100% { box-shadow: 0 0 0 5px #ff0000, 0 0 25px rgba(255, 0, 0, 0.6); }
+        }
+
+        /* ============= 风格4：金属齿轮 + 旋转光效 ============= */
+        .btn-gear {
+            /* 齿轮形状（12齿） */
+            clip-path: polygon(
+                    50% 0%, 61% 18%, 78% 18%, 82% 31%, 95% 35%, 88% 48%, 95% 61%,
+                    82% 65%, 78% 78%, 61% 78%, 50% 95%, 39% 78%, 22% 78%, 18% 65%,
+                    5% 61%, 12% 48%, 5% 35%, 18% 31%, 22% 18%, 39% 18%
+            );
+            background: linear-gradient(45deg, #444 0%, #222 50%, #444 100%);
+            box-shadow: 0 0 15px rgba(0,0,0,0.6), inset 0 0 25px rgba(0,0,0,0.8);
+        }
+
+        .btn-gear::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255,215,0,0.3) 50%, transparent 100%);
+            transform: skewX(-30deg);
+            animation: gear-shine 3s infinite linear;
+        }
+
+        @keyframes gear-shine {
+            0% { left: -80%; }
+            100% { left: 130%; }
+        }
+
+        .btn-gear:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 20px rgba(255,215,0,0.6), inset 0 0 25px rgba(0,0,0,0.8);
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700;
+        }
+
+        .btn-gear.active {
+            background: linear-gradient(45deg, #ffd700 0%, #f0c800 50%, #ffd700 100%);
+            color: #121212;
+            text-shadow: none;
+            box-shadow: 0 0 30px rgba(255,215,0,0.9), inset 0 0 15px rgba(0,0,0,0.3);
+            animation: gear-rotate 5s infinite linear;
+        }
+
+        @keyframes gear-rotate {
+            0% { transform: scale(1.1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(360deg); }
+        }
+
+        /* ============= 风格5：火焰菱形 + 动态燃烧 ============= */
+        .btn-flame {
+            /* 火焰化菱形 */
+            clip-path: polygon(
+                    50% 0%, 80% 20%, 100% 50%, 80% 80%,
+                    50% 100%, 20% 80%, 0% 50%, 20% 20%
+            );
+            background: linear-gradient(45deg, #ff4500, #ff8c00);
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+        }
+
+        .btn-flame::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle, #ff8c00 0%, #ff4500 50%, transparent 70%);
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.7;
+            animation: flame-pulse 2s infinite alternate;
+            clip-path: inherit;
+        }
+
+        @keyframes flame-pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .btn-flame:hover {
+            transform: scale(1.1) skew(5deg, 0);
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+        }
+
+        .btn-flame.active {
+            background: linear-gradient(45deg, #ff1493, #ff4500);
+            box-shadow: 0 0 40px rgba(255, 20, 147, 0.9);
+            animation: flame-burn 0.5s infinite alternate;
+        }
+
+        @keyframes flame-burn {
+            0% { clip-path: polygon(50% 0%, 80% 20%, 100% 50%, 80% 80%, 50% 100%, 20% 80%, 0% 50%, 20% 20%); }
+            50% { clip-path: polygon(50% 5%, 85% 25%, 95% 50%, 85% 75%, 50% 95%, 15% 75%, 5% 50%, 15% 25%); }
+            100% { clip-path: polygon(50% 0%, 80% 20%, 100% 50%, 80% 80%, 50% 100%, 20% 80%, 0% 50%, 20% 20%); }
+        }
+    </style>
+</head>
+<body>
+<!-- 风格1：炸裂五角星 + 粒子爆发 -->
+<h3 class="group-title">风格1：炸裂五角星 + 粒子爆发</h3>
+<div class="btn-group">
+    <button class="shape-btn btn-star active">10s</button>
+    <button class="shape-btn btn-star">20s</button>
+    <button class="shape-btn btn-star">30s</button>
+</div>
+
+<!-- 风格2：锯齿多边形 + 液态流动 -->
+<h3 class="group-title">风格2：锯齿多边形 + 液态流动</h3>
+<div class="btn-group">
+    <button class="shape-btn btn-polygon active">10s</button>
+    <button class="shape-btn btn-polygon">20s</button>
+    <button class="shape-btn btn-polygon">30s</button>
+</div>
+
+<!-- 风格3：不规则碎片 + 故障闪烁 -->
+<h3 class="group-title">风格3：不规则碎片 + 故障闪烁</h3>
+<div class="btn-group">
+    <button class="shape-btn btn-shard active"><span data-text="10s">10s</span></button>
+    <button class="shape-btn btn-shard"><span data-text="20s">20s</span></button>
+    <button class="shape-btn btn-shard"><span data-text="30s">30s</span></button>
+</div>
+
+<!-- 风格4：金属齿轮 + 旋转光效 -->
+<h3 class="group-title">风格4：金属齿轮 + 旋转光效</h3>
+<div class="btn-group">
+    <button class="shape-btn btn-gear active">10s</button>
+    <button class="shape-btn btn-gear">20s</button>
+    <button class="shape-btn btn-gear">30s</button>
+</div>
+
+<!-- 风格5：火焰菱形 + 动态燃烧 -->
+<h3 class="group-title">风格5：火焰菱形 + 动态燃烧</h3>
+<div class="btn-group">
+    <button class="shape-btn btn-flame active">10s</button>
+    <button class="shape-btn btn-flame">20s</button>
+    <button class="shape-btn btn-flame">30s</button>
+</div>
+
+<script>
+    // 选中态切换逻辑
+    document.querySelectorAll('.btn-group').forEach(group => {
+        const buttons = group.querySelectorAll('.shape-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    });
+</script>
+</body>
+</html>
