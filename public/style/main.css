@@ -237,15 +237,26 @@ main{
     margin-top: 2%;
 }
 
-.seconds div{
+.seconds > div{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #17191a;
+    background: #131313;
     height: 80px;
     width: 80px;
     border-radius: 100%;
-    box-shadow: 0 0 20px rgba(49,52,54,0.9)
+    /*box-shadow: 0 0 20px rgba(49,52,54,0.9)*/
+}
+
+
+.seconds > div > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #17191AFF;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
 }
 
 .seconds a{
