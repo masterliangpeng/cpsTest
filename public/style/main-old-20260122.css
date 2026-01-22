@@ -8,16 +8,6 @@ body,html {
     justify-content: center;
     width: 100%;
     height: 100%;
-    /* 禁用文本选择 */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /* 禁用触摸高亮 */
-    -webkit-tap-highlight-color: transparent;
-    /* 禁用触摸动作默认行为 */
-    -webkit-touch-callout: none;
-    -webkit-touch-callout: none;
 }
 
 .app {
@@ -27,11 +17,10 @@ body,html {
 .navbar{
     display: flex;
     justify-content: center;
-    max-width: 1200px;
 }
 
 .nav-container{
-    width: 90%;
+    width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +59,7 @@ main{
     align-items: center; /* 垂直居中 */
     /*min-height: calc(100vh - 80px); !* 最小高度，留出导航栏空间 *!*/
     flex-direction: column; /* 垂直排列 */
-    width: 90%;
+    /*width: 80%;*/
     max-width: 1200px;
     gap: 13px;
 }
@@ -204,8 +193,8 @@ main{
 }
 .clickarea {
     background: #17191a;
-    height: 450px;
-    width: 450px;
+    height: 400px;
+    width: 400px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -216,17 +205,6 @@ main{
     position: relative;
     overflow: hidden;
     margin-top: 2%;
-    /* 禁用右键菜单和文本选择 */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /* 禁用触摸高亮 */
-    -webkit-tap-highlight-color: transparent;
-    /* 禁用默认的触摸行为 */
-    touch-action: manipulation;
-    cursor: default;
 }
 
 .seconds {
@@ -245,7 +223,6 @@ main{
     height: 80px;
     width: 80px;
     border-radius: 100%;
-    box-shadow: 0 0 20px rgba(49,52,54,0.9)
 }
 
 .seconds a{
@@ -258,7 +235,7 @@ main{
     border-radius: 50%;
     background: radial-gradient(
             circle,
-            rgba(255, 255, 255, 0.53) 0%,
+            rgba(255, 255, 255, 0.7) 0%,
             rgba(255, 255, 255, 0.4) 40%,
             rgba(255, 255, 255, 0.15) 60%,
             transparent 70%
@@ -266,7 +243,6 @@ main{
     transform: scale(0);
     animation: ripple 600ms ease-out;
     pointer-events: none;
-    user-select: none;
 }
 
 @keyframes ripple {
@@ -467,168 +443,5 @@ footer {
 
     .footer-section {
         padding: 20px 15px;
-    }
-}
-
-/* ========== 粒子爆炸效果 ========== */
-.particle {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10;
-    user-select: none;
-}
-
-@keyframes particle-explode {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--tx), var(--ty)) scale(0);
-        opacity: 0;
-    }
-}
-
-/* ========== Combo特效 ========== */
-.combo-display {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-    pointer-events: none;
-    user-select: none;
-    opacity: 0;
-    z-index: 5;
-    transition: opacity 0.2s ease;
-}
-
-.combo-text {
-    font-size: 32px;
-    font-weight: bold;
-    color: #FFD700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-}
-
-.combo-number {
-    font-size: 48px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
-                 0 0 40px rgba(255, 215, 0, 0.6);
-}
-
-.combo-display.active {
-    opacity: 1;
-    animation: combo-appear-fall 2s ease-in infinite;
-}
-
-@keyframes combo-appear-fall {
-    0% {
-        transform: translate(-50%, -50%) scale(0.5);
-        opacity: 0;
-    }
-    10% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 1;
-    }
-    20% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    80% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    90% {
-        transform: translate(-50%, -30%) scale(0.9);
-        opacity: 0.5;
-    }
-    100% {
-        transform: translate(-50%, -20%) scale(0.8);
-        opacity: 0;
-    }
-}
-
-/* Combo增加时的震动效果 */
-.combo-display.combo-increase {
-    animation: combo-increase-shake 0.2s ease-out;
-}
-
-@keyframes combo-increase-shake {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    30% {
-        transform: translate(-52%, -48%) scale(1.15);
-    }
-    60% {
-        transform: translate(-48%, -52%) scale(0.95);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-
-/* 金币掉落效果 */
-.coin {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border-radius: 50%;
-    border: 3px solid #B8860B;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-    pointer-events: none;
-    user-select: none;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
-    color: #8B4513;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-}
-
-@keyframes coin-fall {
-    0% {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(200px) rotate(360deg);
-    }
-}
-
-/* 数字飘升效果 */
-.click-number {
-    position: absolute;
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    pointer-events: none;
-    user-select: none;
-    z-index: 10;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    animation: number-float 0.8s ease-out forwards;
-}
-
-@keyframes number-float {
-    0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-80px) scale(1.5);
     }
 }

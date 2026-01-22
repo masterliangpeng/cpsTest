@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cps test - game</title>
+    <link rel="stylesheet" href="/public/style/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+<div class="app">
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo"><img src="https://cpstest.io/img/logo-dark-bg.webp" height="44" width="185" alt="logo"></a>
+            <div class="menu">
+                <button>排行</button>
+                <button>功能</button>
+                <button>翻译</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h1>CPS <span>Test</span></h1>
+
+            <p>Take our CPS Test to accurately measure your clicks per second. Improve your clicking speed with our CPS Tester and challenge yourself to achieve higher scores yourself to achieve higher scores.</p>
+
+            <div class="text-center">
+                <div><i class="fas fa-clock"></i> Time: <span id="timerDisplay">10.00</span></div>
+                <div><i class="fas fa-bolt"></i> Click/s: <span id="cpsDisplay"> 0.00</span></div>
+                <div><i class="fas fa-trophy"></i> Click: <span id="clickCount"> 0</span></div>
+                <!--                    <p><i class="fas fa-clock"></i> Time <span id="timerDisplay">10.00</span></p>-->
+                <!--                    <p><i class="fas fa-bolt"></i> Click/s <span id="cpsDisplay">0.00</span></p>-->
+                <!--                    <p><i class="fas fa-trophy"></i> Click <span id="clickCount">0</span></p>-->
+            </div>
+
+            <div class="container-click">
+                <div class="clickarea" id="circle">
+                    <!--                        <svg t="1767864143991" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11372" width="64" height="64"><path d="M335.992471 141.432471a40.176941 40.176941 0 0 0-69.571765 40.176941l80.353882 139.143529a40.176941 40.176941 0 1 0 69.51153-40.176941l-80.293647-139.143529z m154.985411 295.152941a40.176941 40.176941 0 0 0-58.789647 41.562353l76.016941 481.882353a40.176941 40.176941 0 0 0 74.270118 14.095058l116.61553-198.174117 220.762352-23.250824a40.176941 40.176941 0 0 0 14.998589-75.233882l-443.873883-240.941177z m79.088942 400.203294l-45.899295-290.816 258.710589 140.40847-112.338824 11.806118a40.116706 40.116706 0 0 0-30.418823 19.576471l-70.053647 119.024941z m132.698352-710.053647a40.176941 40.176941 0 0 1 14.697412 54.874353l-80.293647 139.143529a40.176941 40.176941 0 0 1-69.571765-40.176941l80.353883-139.143529a40.176941 40.176941 0 0 1 54.814117-14.697412zM110.471529 451.764706a40.176941 40.176941 0 1 0 0 80.293647H271.058824A40.176941 40.176941 0 0 0 271.058824 451.764706H110.471529z" p-id="11373" fill="#ffffff"></path></svg>-->
+                    <!--                        <svg t="1767864256710" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12739" width="64" height="64"><path d="M455.68 404.0192l91.2384 529.152S614.4 863.744 670.0544 815.3088l122.4704 163.8912c4.9152 6.656 15.6672 7.1168 23.8592 1.0752l52.2752-38.1952c8.2944-5.9904 10.9568-16.3328 5.9392-22.9888l-119.0912-159.4368c62.208-25.088 164.6592-53.6064 164.6592-53.6064L455.68 404.0192z m-147.3536 244.3776l-135.8336 99.328c-20.5824 15.0528-24.2688 43.9808-8.0384 65.3824 16.2816 21.4016 46.2848 27.0336 66.7648 12.032l135.8848-99.328c20.992-15.36 24.5248-45.5168 8.2432-66.8672a48.2816 48.2816 0 0 0-67.0208-10.5472zM949.76 238.9504a48.0768 48.0768 0 0 0-67.072-10.496L747.7248 327.168c-21.4528 15.6672-25.1392 44.6464-8.9088 66.048 16.2816 21.3504 46.2848 26.9824 67.6864 11.3152l134.912-98.6624c21.504-15.7184 24.576-45.5168 8.2944-66.9184zM319.2832 136.8064a47.9744 47.9744 0 0 0-66.7648-10.0352c-20.0704 14.7456-24.2176 43.9808-8.2944 64.9216l105.5232 138.8032c15.9232 20.992 45.7216 25.3952 65.792 10.7008a45.824 45.824 0 0 0 9.2672-65.6384l-105.472-138.752z m266.496 164.9664a46.08 46.08 0 0 0 53.6576-39.2704l21.1456-167.7824c3.4304-25.8048-14.9504-49.9712-41.472-54.6816a46.08 46.08 0 0 0-53.6576 39.168l-21.248 167.936c-3.2768 25.8048 15.104 49.92 41.5744 54.6304zM329.728 488.96a50.9952 50.9952 0 0 0-41.5232-54.6304l-170.0864-28.0064c-27.0336-3.584-50.688 13.7216-53.6064 39.2704a47.7696 47.7696 0 0 0 41.5232 54.6304l170.0352 27.9552a46.1312 46.1312 0 0 0 53.6576-39.2192z" p-id="12740" fill="#ffffff"></path><path d="M455.68 404.0192l91.2384 529.152S614.4 863.744 670.0544 815.3088l122.4704 163.8912c4.9152 6.656 15.6672 7.1168 23.8592 1.0752l52.2752-38.1952c8.2944-5.9904 10.9568-16.3328 5.9392-22.9888l-119.0912-159.4368c62.208-25.088 164.6592-53.6064 164.6592-53.6064L455.68 404.0192z m-147.3536 244.3776l-135.8336 99.328c-20.5824 15.0528-24.2688 43.9808-8.0384 65.3824 16.2816 21.4016 46.2848 27.0336 66.7648 12.032l135.8848-99.328c20.992-15.36 24.5248-45.5168 8.2432-66.8672a48.2816 48.2816 0 0 0-67.0208-10.5472zM949.76 238.9504a48.0768 48.0768 0 0 0-67.072-10.496L747.7248 327.168c-21.4528 15.6672-25.1392 44.6464-8.9088 66.048 16.2816 21.3504 46.2848 26.9824 67.6864 11.3152l134.912-98.6624c21.504-15.7184 24.576-45.5168 8.2944-66.9184zM319.2832 136.8064a47.9744 47.9744 0 0 0-66.7648-10.0352c-20.0704 14.7456-24.2176 43.9808-8.2944 64.9216l105.5232 138.8032c15.9232 20.992 45.7216 25.3952 65.792 10.7008a45.824 45.824 0 0 0 9.2672-65.6384l-105.472-138.752z m266.496 164.9664a46.08 46.08 0 0 0 53.6576-39.2704l21.1456-167.7824c3.4304-25.8048-14.9504-49.9712-41.472-54.6816a46.08 46.08 0 0 0-53.6576 39.168l-21.248 167.936c-3.2768 25.8048 15.104 49.92 41.5744 54.6304zM329.728 488.96a50.9952 50.9952 0 0 0-41.5232-54.6304l-170.0864-28.0064c-27.0336-3.584-50.688 13.7216-53.6064 39.2704a47.7696 47.7696 0 0 0 41.5232 54.6304l170.0352 27.9552a46.1312 46.1312 0 0 0 53.6576-39.2192z" p-id="12741" fill="#ffffff"></path></svg>-->
+                    <!--                        <svg t="1767864297625" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13839" width="64" height="64"><path d="M396.8 371.2c0-19.2 6.4-32 25.6-19.2l505.6 307.2h6.4c12.8 12.8 12.8 25.6-6.4 25.6 0 0-102.4 25.6-172.8 57.6l108.8 166.4c12.8 12.8 6.4 38.4-6.4 51.2l-38.4 25.6c-12.8 12.8-38.4 6.4-44.8-6.4l-108.8-166.4c-12.8 12.8-25.6 25.6-38.4 44.8l-12.8 19.2-76.8 102.4c-12.8 19.2-25.6 12.8-32-6.4L396.8 371.2z" fill="#ffffff" p-id="13840"></path><path d="M121.6 288c0-121.6 96-217.6 217.6-217.6s217.6 96 217.6 217.6v19.2c12.8 6.4 25.6 12.8 38.4 25.6 0-12.8 6.4-25.6 6.4-44.8C601.6 147.2 486.4 25.6 339.2 25.6S76.8 147.2 76.8 288c0 134.4 108.8 249.6 236.8 256 0-12.8-6.4-25.6-6.4-44.8-102.4-12.8-185.6-102.4-185.6-211.2z" fill="#ffffff" p-id="13841"></path></svg>-->
+                    <!--                        <svg id="clickIcon" t="1767867072788" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="30066" width="128" height="128"><path d="M759.466667 739.555556s0 2.844444 0 0c25.6 0 48.355556 2.844444 73.955555 0 17.066667 0 25.6-8.533333 25.6-22.755556 0-11.377778-5.688889-17.066667-14.222222-22.755556-51.2-42.666667-102.4-82.488889-153.6-125.155555L477.866667 398.222222c-11.377778-8.533333-25.6-11.377778-39.822223-5.688889-14.222222 8.533333-19.911111 19.911111-19.911111 36.977778 0 14.222222 2.844444 31.288889 2.844445 45.511111 5.688889 139.377778 14.222222 278.755556 19.911111 418.133334 0 17.066667 5.688889 22.755556 17.066667 28.444444 14.222222 2.844444 22.755556-2.844444 31.288888-11.377778 25.6-34.133333 54.044444-68.266667 79.644445-102.4 25.6-31.288889 59.733333-54.044444 99.555555-59.733333 31.288889-8.533333 62.577778-5.688889 91.022223-8.533333M352.711111 659.911111c-2.844444-76.8-8.533333-153.6-11.377778-230.4-2.844444-45.511111 17.066667-82.488889 59.733334-102.4 42.666667-22.755556 85.333333-17.066667 122.311111 11.377778 76.8 59.733333 153.6 122.311111 230.4 184.888889 48.355556 39.822222 96.711111 79.644444 145.066666 116.622222 31.288889 25.6 45.511111 68.266667 34.133334 105.244444-11.377778 39.822222-48.355556 65.422222-91.022222 68.266667-42.666667 2.844444-88.177778 2.844444-130.844445 0-39.822222 0-68.266667 14.222222-91.022222 42.666667-25.6 34.133333-51.2 65.422222-76.8 99.555555-45.511111 54.044444-133.688889 45.511111-167.822222-14.222222-8.533333-14.222222-11.377778-28.444444-14.222223-42.666667 0-76.8-5.688889-159.288889-8.533333-238.933333" p-id="30067" fill="#ffffff"></path><path d="M150.755556 142.222222c5.688889 2.844444 14.222222 2.844444 19.911111 8.533334 31.288889 19.911111 62.577778 39.822222 93.866666 56.888888 19.911111 11.377778 25.6 36.977778 17.066667 56.888889-11.377778 19.911111-34.133333 25.6-54.044444 14.222223-31.288889-19.911111-62.577778-39.822222-96.711112-59.733334-14.222222-8.533333-19.911111-28.444444-17.066666-45.511111 5.688889-17.066667 19.911111-28.444444 36.977778-31.288889" p-id="30068" fill="#ffffff"></path><path d="M256 415.288889c0 14.222222-5.688889 28.444444-19.911111 36.977778-31.288889 17.066667-65.422222 36.977778-99.555556 56.888889-17.066667 11.377778-39.822222 0-48.355555-19.911112-8.533333-22.755556-2.844444-45.511111 17.066666-56.888888 34.133333-19.911111 65.422222-39.822222 99.555556-56.888889C227.555556 361.244444 256 381.155556 256 415.288889" p-id="30069" fill="#ffffff"></path><path d="M568.888889 210.488889c0-14.222222 5.688889-25.6 19.911111-34.133333 34.133333-19.911111 65.422222-39.822222 99.555556-56.888889 17.066667-11.377778 39.822222 0 48.355555 19.911111 8.533333 19.911111 2.844444 45.511111-14.222222 56.888889-34.133333 19.911111-65.422222 39.822222-99.555556 56.888889-25.6 11.377778-54.044444-8.533333-54.044444-42.666667M455.111111 113.777778v48.355555c0 19.911111-17.066667 36.977778-42.666667 36.977778-19.911111 0-42.666667-14.222222-42.666666-36.977778V62.577778c0-19.911111 19.911111-34.133333 45.511111-34.133334 22.755556 0 39.822222 17.066667 39.822222 36.977778V113.777778" p-id="30070" fill="#ffffff"></path></svg>-->
+                </div>
+            </div>
+
+            <div class="seconds">
+                <div><a href="#" data-seconds="10">10s</a></div>
+                <div><a href="#" data-seconds="20">20s</a></div>
+                <div><a href="#" data-seconds="30">30s</a></div>
+                <div><a href="#" data-seconds="40">40s</a></div>
+                <div><a href="#" data-seconds="50">50s</a></div>
+            </div>
+
+            <div class="footer-content">
+                <section class="footer-section">
+                    <h2><i class="fas fa-tachometer-alt" style="color: #4CAF50;"></i> What is CPS Test</h2>
+                    <p>CPS Test (Clicks Per Second) is a free online tool that measures your mouse clicking speed. It calculates how many times you can click your mouse within a specific time frame, typically expressed as clicks per second. This test is popular among gamers, especially those playing Minecraft PvP, where fast clicking can provide a competitive advantage.</p>
+                </section>
+
+                <section class="footer-section">
+                    <h2><i class="fas fa-chart-line" style="color: #2196F3;"></i> How to Improve Your CPS Score</h2>
+                    <p>Regular practice with our CPS tester can help improve your clicking speed. Try different clicking techniques like butterfly clicking, jitter clicking, or drag clicking to find what works best for you. Most average users score between 3-6 CPS, while professional gamers can achieve 10-15+ CPS with advanced techniques.</p>
+                </section>
+
+                <section class="footer-section">
+                    <h2><i class="fas fa-star" style="color: #FFC107;"></i> Why Use CPS Test</h2>
+                    <ul>
+                        <li><strong>Gaming Performance:</strong> Measure and improve your clicking speed for competitive gaming</li>
+                        <li><strong>Practice Tool:</strong> Free online CPS tester to track your progress over time</li>
+                        <li><strong>Multiple Time Modes:</strong> Choose from 10, 20, 30, 40, or 50 second tests</li>
+                        <li><strong>Instant Results:</strong> Real-time CPS calculation and click tracking</li>
+                    </ul>
+                </section>
+
+                <section class="footer-section">
+                    <h2><i class="fas fa-cogs" style="color: #FF5722;"></i> CPS Test Features</h2>
+                    <p>Our CPS tester offers accurate click speed measurement with an intuitive interface. Test your mouse clicking speed with customizable time durations. Perfect for gamers who want to improve their click speed or anyone curious about their clicking ability. Start testing now and see how fast you can click!</p>
+                </section>
+
+                <section class="footer-section">
+                    <h2><i class="fas fa-gamepad" style="color: #9C27B0;"></i> About Click Speed Testing</h2>
+                    <p>Click speed testing has become essential for gamers, particularly in Minecraft PvP, shooting games, and other competitive games where rapid clicking matters. Use our free CPS test to measure, practice, and improve your clicks per second. Whether you're a casual gamer or a competitive player, tracking your CPS can help you enhance your gaming performance.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!--            <div class="footer-content">-->
+        <!--                <section class="footer-section">-->
+        <!--                    <h2><i class="fas fa-tachometer-alt" style="color: #4CAF50;"></i> What is CPS Test</h2>-->
+        <!--                    <p>CPS Test (Clicks Per Second) is a free online tool that measures your mouse clicking speed. It calculates how many times you can click your mouse within a specific time frame, typically expressed as clicks per second. This test is popular among gamers, especially those playing Minecraft PvP, where fast clicking can provide a competitive advantage.</p>-->
+        <!--                </section>-->
+
+        <!--                <section class="footer-section">-->
+        <!--                    <h2><i class="fas fa-chart-line" style="color: #2196F3;"></i> How to Improve Your CPS Score</h2>-->
+        <!--                    <p>Regular practice with our CPS tester can help improve your clicking speed. Try different clicking techniques like butterfly clicking, jitter clicking, or drag clicking to find what works best for you. Most average users score between 3-6 CPS, while professional gamers can achieve 10-15+ CPS with advanced techniques.</p>-->
+        <!--                </section>-->
+
+        <!--                <section class="footer-section">-->
+        <!--                    <h2><i class="fas fa-star" style="color: #FFC107;"></i> Why Use CPS Test</h2>-->
+        <!--                    <ul>-->
+        <!--                        <li><strong>Gaming Performance:</strong> Measure and improve your clicking speed for competitive gaming</li>-->
+        <!--                        <li><strong>Practice Tool:</strong> Free online CPS tester to track your progress over time</li>-->
+        <!--                        <li><strong>Multiple Time Modes:</strong> Choose from 10, 20, 30, 40, or 50 second tests</li>-->
+        <!--                        <li><strong>Instant Results:</strong> Real-time CPS calculation and click tracking</li>-->
+        <!--                    </ul>-->
+        <!--                </section>-->
+
+        <!--                <section class="footer-section">-->
+        <!--                    <h2><i class="fas fa-cogs" style="color: #FF5722;"></i> CPS Test Features</h2>-->
+        <!--                    <p>Our CPS tester offers accurate click speed measurement with an intuitive interface. Test your mouse clicking speed with customizable time durations. Perfect for gamers who want to improve their click speed or anyone curious about their clicking ability. Start testing now and see how fast you can click!</p>-->
+        <!--                </section>-->
+
+        <!--                <section class="footer-section">-->
+        <!--                    <h2><i class="fas fa-gamepad" style="color: #9C27B0;"></i> About Click Speed Testing</h2>-->
+        <!--                    <p>Click speed testing has become essential for gamers, particularly in Minecraft PvP, shooting games, and other competitive games where rapid clicking matters. Use our free CPS test to measure, practice, and improve your clicks per second. Whether you're a casual gamer or a competitive player, tracking your CPS can help you enhance your gaming performance.</p>-->
+        <!--                </section>-->
+        <!--            </div>-->
+    </footer>
+</div>
+</body>
+<script>
+    // 状态变量
+    let duration = 10;  // 默认倒计时时长（秒）
+    let running = false;  // 是否正在运行
+    let clickCount = 0;  // 点击次数
+    let startTime = 0;  // 开始时间
+    let intervalId = null;  // 定时器ID
+    let endTimeoutId = null;  // 结束定时器ID
+    let testFinished = false;  // 测试是否已完成
+
+    // 获取 DOM 元素
+    const clickCountElement = document.getElementById("clickCount");
+    const timerDisplay = document.getElementById("timerDisplay");
+    const cpsDisplay = document.getElementById("cpsDisplay");
+    const circle = document.getElementById('circle');
+    const clickIcon = document.getElementById('clickIcon');
+    const timeBtns = document.querySelectorAll('.seconds a');
+
+    // 初始化显示
+    timerDisplay.textContent = formatTime(duration);
+
+    // 时间格式化函数（秒 -> 秒.毫秒）
+    function formatTime(seconds) {
+        const secs = Math.floor(seconds);
+        const ms = Math.floor((seconds % 1) * 100);
+        return `${secs}.${ms.toString().padStart(2, '0')}`;
+    }
+
+    // 重置测试状态
+    function resetTest() {
+        running = false;
+        testFinished = false;
+        clearInterval(intervalId);
+        intervalId = null;
+        clearTimeout(endTimeoutId);
+
+        clickCount = 0;
+        timerDisplay.textContent = formatTime(duration);
+        cpsDisplay.textContent = '0.00';
+        clickCountElement.textContent = '0';
+
+        // 恢复显示图标
+        if (clickIcon) {
+            clickIcon.style.display = 'block';
+        }
+    }
+
+    // 更新运行状态（每100ms调用）
+    function updateRunning() {
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = Math.max(duration - elapsed, 0);
+        timerDisplay.textContent = formatTime(remaining);
+
+        const cps = elapsed > 0 ? (clickCount / elapsed) : 0;
+        cpsDisplay.textContent = cps.toFixed(2);
+        clickCountElement.textContent = clickCount;
+    }
+
+    // 结束测试
+    function endTest() {
+        running = false;
+        testFinished = true;
+        clearInterval(intervalId);
+        intervalId = null;
+        clearTimeout(endTimeoutId);
+
+        // 显示最终结果（保留不重置）
+        const cps = duration > 0 ? (clickCount / duration) : 0;
+        timerDisplay.textContent = formatTime(0);
+        cpsDisplay.textContent = cps.toFixed(2);
+        clickCountElement.textContent = clickCount;
+
+        // 恢复显示图标
+        if (clickIcon) {
+            clickIcon.style.display = 'block';
+        }
+    }
+
+    // 开始测试
+    function startTest() {
+        running = true;
+        testFinished = false;
+        clickCount = 0;
+        startTime = Date.now();
+        timerDisplay.textContent = formatTime(duration);
+        cpsDisplay.textContent = '0.00';
+        clickCountElement.textContent = '0';
+
+        // 隐藏图标
+        if (clickIcon) {
+            clickIcon.style.display = 'none';
+        }
+
+        clearInterval(intervalId);
+        intervalId = setInterval(updateRunning, 100);
+
+        clearTimeout(endTimeoutId);
+        endTimeoutId = setTimeout(endTest, duration * 1000);
+    }
+
+    // 时间按钮点击事件
+    timeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // 更新倒计时时长
+            duration = parseInt(btn.getAttribute('data-seconds'), 10);
+            timerDisplay.textContent = formatTime(duration);
+
+            // 重置当前状态（即使测试运行中也可以切换）
+            resetTest();
+        });
+    });
+
+    // 点击圆形区域事件
+    circle.addEventListener('click', (e) => {
+        // 添加波纹效果
+        const rect = circle.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+
+        circle.appendChild(ripple);
+
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
+
+        // 如果测试已完成，点击圆形区域不开始新测试
+        if (testFinished) {
+            return;
+        }
+
+        // 开始测试并计数
+        if (!running) {
+            startTest();
+        }
+        clickCount++;
+
+        // 更新能量槽
+        powerMeter.handleClick();
+    });
+
+    // ========== 能量填充动画逻辑 ==========
+    const powerMeter = {
+        textCenter: document.querySelector('.text-center'),
+        powerLevel: 0,
+        clickTimes: [],
+        decayInterval: null,
+
+        init() {
+            // 启动能量衰减
+            this.startDecay();
+        },
+
+        handleClick() {
+            const now = Date.now();
+
+            // 记录点击时间
+            this.clickTimes.push(now);
+
+            // 只保留最近2秒的点击记录
+            this.clickTimes = this.clickTimes.filter(time => now - time < 2000);
+
+            // 每次点击固定增加 0.2% 的能量（点击5次增加1%）
+            this.powerLevel = Math.min(this.powerLevel + 5, 100);
+
+            this.updateDisplay();
+        },
+
+        startDecay() {
+            this.decayInterval = setInterval(() => {
+                // 能量自动衰减
+                if (this.powerLevel > 0) {
+                    this.powerLevel = Math.max(this.powerLevel - 2, 0);
+                    this.updateDisplay();
+                }
+            }, 100);
+        },
+
+        updateDisplay() {
+            // 更新text-center的背景填充宽度
+            this.textCenter.style.setProperty('--power-width', this.powerLevel + '%');
+
+            // 移除所有状态类
+            this.textCenter.classList.remove('orange', 'overload', 'shake');
+
+            // 根据能量级别设置颜色和状态
+            if (this.powerLevel >= 80) {
+                // 过载状态 - 红色闪烁 + 震动
+                this.textCenter.classList.add('overload', 'shake');
+            } else if (this.powerLevel >= 50) {
+                // 高能量状态 - 橙色
+                this.textCenter.classList.add('orange');
+            }
+            // 能量 < 50 保持蓝色（默认状态）
+        }
+    };
+
+    // 初始化能量填充
+    powerMeter.init();
+</script>
+</html>
