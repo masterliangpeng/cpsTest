@@ -206,6 +206,9 @@
         cpsDisplay.textContent = '0.00';
         clickCountElement.textContent = '0';
 
+        // 重置能量条
+        powerMeter.reset();
+
         // 恢复显示图标
         if (clickIcon) {
             clickIcon.style.display = 'block';
@@ -237,6 +240,9 @@
         cpsDisplay.textContent = cps.toFixed(2);
         clickCountElement.textContent = clickCount;
 
+        // 清空能量条，停止动画
+        powerMeter.reset();
+
         // 恢复显示图标
         if (clickIcon) {
             clickIcon.style.display = 'block';
@@ -252,6 +258,9 @@
         timerDisplay.textContent = formatTime(duration);
         cpsDisplay.textContent = '0.00';
         clickCountElement.textContent = '0';
+
+        // 重置能量条
+        powerMeter.reset();
 
         // 隐藏图标
         if (clickIcon) {
@@ -458,10 +467,17 @@
         powerLevel: 0,
         clickTimes: [],
         decayInterval: null,
+        lastParticleTime: 0,
 
         init() {
             // 启动能量衰减
             this.startDecay();
+        },
+
+        reset() {
+            this.powerLevel = 0;
+            this.clickTimes = [];
+            this.updateDisplay();
         },
 
         handleClick() {
@@ -481,8 +497,8 @@
 
         startDecay() {
             this.decayInterval = setInterval(() => {
-                // 能量自动衰减
-                if (this.powerLevel > 0) {
+                // 能量自动衰减，但达到100%后不再衰减
+                if (this.powerLevel > 0 && this.powerLevel < 100) {
                     this.powerLevel = Math.max(this.powerLevel - 2, 0);
                     this.updateDisplay();
                 }
@@ -494,10 +510,19 @@
             this.textCenter.style.setProperty('--power-width', this.powerLevel + '%');
 
             // 移除所有状态类
-            this.textCenter.classList.remove('orange', 'overload', 'shake');
+            this.textCenter.classList.remove('orange', 'overload', 'shake', 'overflowing');
 
             // 根据能量级别设置颜色和状态
-            if (this.powerLevel >= 80) {
+            if (this.powerLevel >= 100) {
+                // 能量满 - 溢出效果
+                this.textCenter.classList.add('overload', 'shake', 'overflowing');
+                // 触发溢出粒子效果（节流：每100ms最多一次）
+                const now = Date.now();
+                if (now - this.lastParticleTime > 100) {
+                    this.createOverflowParticles();
+                    this.lastParticleTime = now;
+                }
+            } else if (this.powerLevel >= 80) {
                 // 过载状态 - 红色闪烁 + 震动
                 this.textCenter.classList.add('overload', 'shake');
             } else if (this.powerLevel >= 50) {
@@ -505,6 +530,48 @@
                 this.textCenter.classList.add('orange');
             }
             // 能量 < 50 保持蓝色（默认状态）
+        },
+
+        // 创建能量溢出粒子效果
+        createOverflowParticles() {
+            const rect = this.textCenter.getBoundingClientRect();
+            const colors = ['#00d4ff', '#ff9500', '#ff4444', '#FFD700', '#FF69B4', '#00FF7F'];
+            const particleCount = 8;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'energy-particle';
+
+                const size = Math.random() * 6 + 3;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+
+                // 从右侧边缘溢出
+                const startX = rect.width - 5;
+                const startY = Math.random() * rect.height;
+
+                particle.style.left = (rect.left + startX) + 'px';
+                particle.style.top = (rect.top + startY) + 'px';
+
+                // 向右外扩散
+                const ox = Math.random() * 60 + 30;
+                const oy = (Math.random() - 0.5) * 80;
+
+                particle.style.setProperty('--ox', ox + 'px');
+                particle.style.setProperty('--oy', oy + 'px');
+
+                particle.style.animation = `energy-overflow ${Math.random() * 0.4 + 0.3}s ease-out forwards`;
+
+                document.body.appendChild(particle);
+
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
         }
     };
 
