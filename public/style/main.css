@@ -622,26 +622,26 @@ main{
 
 
 /* 金币掉落效果 */
-.coin {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border-radius: 50%;
-    border: 3px solid #B8860B;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-    pointer-events: none;
-    user-select: none;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
-    color: #8B4513;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-}
+/*.coin {*/
+/*    position: absolute;*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);*/
+/*    border-radius: 50%;*/
+/*    border: 3px solid #B8860B;*/
+/*    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8),*/
+/*                inset 0 0 10px rgba(255, 255, 255, 0.5);*/
+/*    pointer-events: none;*/
+/*    user-select: none;*/
+/*    z-index: 10;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-weight: bold;*/
+/*    font-size: 16px;*/
+/*    color: #8B4513;*/
+/*    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);*/
+/*}*/
 
 @keyframes coin-fall {
     0% {
