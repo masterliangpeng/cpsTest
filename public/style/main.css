@@ -18,6 +18,9 @@ body,html {
     /* 禁用触摸动作默认行为 */
     -webkit-touch-callout: none;
     -webkit-touch-callout: none;
+
+    /*font-family: "Helvetica Neue", Arial, sans-serif;*/
+    font-family: "San Francisco", Arial, sans-serif;
 }
 
 .app {
@@ -57,6 +60,32 @@ body,html {
 /*    top: 5%;*/
 /*}*/
 
+/*.menu{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    gap: 10px;*/
+/*    width: 25%;*/
+/*}*/
+
+/*.menu>div{*/
+/*    width: 100px;*/
+/*    height: 30px;*/
+/*    display: flex;*/
+/*    background: #ffffff4d;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    border-radius:20px;*/
+/*}*/
+
+.menu > button{
+    margin-left:10px;
+    background:#1f2937;
+    border:none;
+    color:white;
+    padding:6px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
 main{
     display: flex;
     justify-content: center;
@@ -98,7 +127,7 @@ main{
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    background: #0a0a0a;
+    /*background: #0a0a0a;*/
     border-radius: 8px;
     /*padding: 10px;*/
 }
@@ -232,8 +261,8 @@ main{
     width: 100%;
     height: auto;
     display: flex;
-    flex-direction: column;
-    /*justify-content: center;*/
+    /*flex-direction: column;*/
+    justify-content: space-between;
     align-items: center;
 }
 .clickarea {
@@ -261,6 +290,22 @@ main{
     /* 禁用默认的触摸行为 */
     touch-action: manipulation;
     cursor: default;
+}
+
+.function-area{
+    width: 200px;
+    height: 200px;
+    background: #17191a;
+    border-radius: 100%;
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.function-area > span{
+    font-size: 40px;
 }
 
 .seconds {
@@ -305,7 +350,7 @@ main{
             circle,
             rgba(255, 255, 255, 0.53) 0%,
             rgba(255, 255, 255, 0.4) 40%,
-            rgba(255, 255, 255, 0.15) 60%,
+            rgba(255, 255, 255, 0.2) 60%,
             transparent 70%
     );
     transform: scale(0);
